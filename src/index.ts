@@ -1,9 +1,7 @@
 import "dotenv/config";
 import { serve } from "@hono/node-server";
-import { Hono } from "hono";
+import { createApp } from "./appFactory.ts";
 // import { cors } from "hono/cors";
-
-const app = new Hono();
 
 const port = Number(process.env.APP_PORT);
 // const origin = process.env.APP_ALLOWED_ORIGIN;
@@ -22,7 +20,7 @@ const port = Number(process.env.APP_PORT);
 
 serve(
   {
-    fetch: app.fetch,
+    fetch: createApp().fetch,
     port,
   },
   (info) => {

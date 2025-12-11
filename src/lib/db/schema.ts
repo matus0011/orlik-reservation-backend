@@ -41,6 +41,7 @@ export const memberships = mysqlTable("memberships", {
     .notNull(),
   active: boolean("active").notNull().default(true),
   joinedAt: timestamp("joined_at").defaultNow().notNull(),
+  canAddMembers: boolean("can_add_members").notNull().default(false),
 });
 
 export const events = mysqlTable("events", {
