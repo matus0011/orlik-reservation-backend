@@ -11,11 +11,9 @@ import {
 
 const teamRoutes = new Hono();
 
-//ale routes should be protected by authentication middleware
 teamRoutes.use("*", authMiddleware);
 
-// eventRoutes.get("/", getEvents);
-// wy need only name and id no need validation
+teamRoutes.get("/", getTeams);
 
 teamRoutes.post(
   "/",
@@ -29,9 +27,16 @@ teamRoutes.post(
   createTeam
 );
 
-// eventRoutes.put("/:id", updateEvent);
-// only update name mayby onlu validation for name and check if team exists
+teamRoutes.put(
+  "/:id",
+  zValidator("param", z.object({ id: z.string() })),
+  updateTeam
+);
 
-// eventRoutes.delete("/:id", deleteEvent);
+teamRoutes.delete(
+  "/:id",
+  zValidator("param", z.object({ id: z.string() })),
+  deleteTeam
+);
 
 export default teamRoutes;

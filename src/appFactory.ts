@@ -5,6 +5,7 @@ import inviteRoutes from "./routes/invites.ts";
 import eventRoutes from "./routes/events.ts";
 import memberRoutes from "./routes/members.ts";
 import bookingRoutes from "./routes/bookings.ts";
+
 import { loggerMiddleware } from "./middlewares/logger.ts";
 
 export const createApp = () => {

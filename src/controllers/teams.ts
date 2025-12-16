@@ -1,22 +1,24 @@
 import type { Context } from "hono";
 import type { InsertTeam } from "../lib/db/schema.js";
-import { createTeam as createTeamService } from "../services/teams.js";
+import {
+  createTeam as createTeamService,
+  getTeams as getTeamsService,
+  updateTeam as updateTeamService,
+  deleteTeam as deleteTeamService,
+} from "../services/teams.js";
 
-export const getTeams = (c: Context) => {
-  //   return c.json([
-  //     { id: 1, title: "Konferencja JS" },
-  //     { id: 2, title: "Meetup Hono" },
-  //   ]);
-};
-
-export const deleteTeam = (c: Context) => {
-  //   const id = c.req.param("id");
-  //   return c.json({ id, title: "Konferencja JS" });
+export const getTeams = async (c: Context) => {
+  try {
+    const teams = await getTeamsService();
+    return c.json({ success: true, data: teams });
+  } catch (error) {
+    return c.json({ error: "Failed to get teams" }, 500);
+  }
 };
 
 export const createTeam = async (c: Context) => {
   try {
-    const validatedData = (await c.req.valid("json")) as InsertTeam;
+    const validatedData = await c.req.json();
     const getLoggedInUserId = c.get("user")?.id;
 
     const result = await createTeamService({
@@ -30,8 +32,27 @@ export const createTeam = async (c: Context) => {
   }
 };
 
-export const updateTeam = (c: Context) => {
-  //   const id = c.req.param("id");
-  //   const event = c.req.json();
-  //   return c.json({ id, ...event });
+export const updateTeam = async (c: Context) => {
+  try {
+    const validatedData = await c.req.json();
+
+    const result = await updateTeamService({
+      id: Number(c.req.param("id")),
+      ...validatedData,
+    });
+
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    return c.json({ error: "Failed to update team" }, 500);
+  }
+};
+
+export const deleteTeam = async (c: Context) => {
+  try {
+    const result = await deleteTeamService(Number(c.req.param("id")));
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    console.error(error);
+    return c.json({ error: "Failed to delete team" }, 500);
+  }
 };
