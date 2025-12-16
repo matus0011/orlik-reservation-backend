@@ -27,7 +27,9 @@ export const teams = mysqlTable("teams", {
   id: int("id").primaryKey().autoincrement(),
   name: varchar("name", { length: 150 }).notNull(),
   inviteCode: varchar("invite_code", { length: 50 }).notNull(),
-  createdBy: int("created_by").references(() => users.id),
+  createdBy: int("created_by")
+    .references(() => users.id)
+    .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
