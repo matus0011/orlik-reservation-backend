@@ -17,7 +17,7 @@ export const createApp = () => {
   // app.use("/api/auth/*", auth.handler);
 
   app.route("/api/teams", teamRoutes);
-  // app.route("/api/events", eventRoutes);
+  app.route("/api/events", eventRoutes);
   // app.route("/api/members", memberRoutes);
   // app.route("/api/bookings", bookingRoutes);
 

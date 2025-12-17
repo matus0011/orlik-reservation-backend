@@ -3,35 +3,42 @@ import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { authMiddleware } from "../middlewares/auth.js";
 import {
-  getTeams,
-  createTeam,
-  updateTeam,
-  deleteTeam,
-} from "../controllers/teams.js";
+  getEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+} from "../controllers/events.js";
 
 const eventRoutes = new Hono();
 
-//ale routes should be protected by authentication middleware
 eventRoutes.use("*", authMiddleware);
 
-// eventRoutes.get("/", getEvents);
-// wy need only name and id no need validation
+eventRoutes.get("/", getEvents);
 
-// eventRoutes.post(
-//   "/",
-//   zValidator(
-//     "json",
-//     z.object({
-//       name: z.string().min(1).max(200),
-//       inviteCode: z.string().min(1).max(50),
-//     })
-//   ),
-//   createTeam
-// );
+eventRoutes.post(
+  "/",
+  zValidator(
+    "json",
+    z.object({
+      teamId: z.number().min(1),
+      title: z.string().min(1).max(200),
+      description: z.string().optional(),
+      limitPlayers: z.number(),
+    })
+  ),
+  createEvent
+);
 
-// eventRoutes.put("/:id", updateEvent);
-// only update name mayby onlu validation for name and check if team exists
+eventRoutes.put(
+  "/:id",
+  zValidator("param", z.object({ id: z.string() })),
+  updateEvent
+);
 
-// eventRoutes.delete("/:id", deleteEvent);
+eventRoutes.delete(
+  "/:id",
+  zValidator("param", z.object({ id: z.string() })),
+  deleteEvent
+);
 
 export default eventRoutes;

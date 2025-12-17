@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "mysql",
-  "id": "30bb8ec1-5d60-47a3-8118-32cae310ebf5",
+  "id": "b2c7ac46-a3bc-4cc7-a851-c0f777056dcb",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -16,10 +16,6 @@
     },
     {
       "name": "events",
-      "entityType": "tables"
-    },
-    {
-      "name": "invites",
       "entityType": "tables"
     },
     {
@@ -280,7 +276,7 @@
       "type": "timestamp",
       "notNull": true,
       "autoIncrement": false,
-      "default": null,
+      "default": "(now())",
       "onUpdateNow": false,
       "onUpdateNowFsp": null,
       "charSet": null,
@@ -305,22 +301,8 @@
       "table": "events"
     },
     {
-      "type": "varchar(200)",
-      "notNull": false,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "field_location",
-      "entityType": "columns",
-      "table": "events"
-    },
-    {
       "type": "int",
-      "notNull": false,
+      "notNull": true,
       "autoIncrement": false,
       "default": null,
       "onUpdateNow": false,
@@ -345,76 +327,6 @@
       "name": "created_at",
       "entityType": "columns",
       "table": "events"
-    },
-    {
-      "type": "int",
-      "notNull": true,
-      "autoIncrement": true,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "id",
-      "entityType": "columns",
-      "table": "invites"
-    },
-    {
-      "type": "int",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "team_id",
-      "entityType": "columns",
-      "table": "invites"
-    },
-    {
-      "type": "varchar(50)",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "invite_code",
-      "entityType": "columns",
-      "table": "invites"
-    },
-    {
-      "type": "int",
-      "notNull": false,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "created_by",
-      "entityType": "columns",
-      "table": "invites"
-    },
-    {
-      "type": "timestamp",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": "(now())",
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "created_at",
-      "entityType": "columns",
-      "table": "invites"
     },
     {
       "type": "int",
@@ -851,14 +763,6 @@
         "id"
       ],
       "name": "PRIMARY",
-      "table": "invites",
-      "entityType": "pks"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "name": "PRIMARY",
       "table": "memberships",
       "entityType": "pks"
     },
@@ -1021,36 +925,6 @@
       "name": "events_created_by_users_id_fkey",
       "entityType": "fks",
       "table": "events"
-    },
-    {
-      "columns": [
-        "team_id"
-      ],
-      "tableTo": "teams",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
-      "nameExplicit": false,
-      "name": "invites_team_id_teams_id_fkey",
-      "entityType": "fks",
-      "table": "invites"
-    },
-    {
-      "columns": [
-        "created_by"
-      ],
-      "tableTo": "users",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
-      "nameExplicit": false,
-      "name": "invites_created_by_users_id_fkey",
-      "entityType": "fks",
-      "table": "invites"
     },
     {
       "columns": [

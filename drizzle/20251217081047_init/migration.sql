@@ -22,18 +22,9 @@ CREATE TABLE `events` (
 	`team_id` int NOT NULL,
 	`title` varchar(200) NOT NULL,
 	`description` text,
-	`date` timestamp NOT NULL,
+	`date` timestamp NOT NULL DEFAULT (now()),
 	`limit_players` int NOT NULL DEFAULT 0,
-	`field_location` varchar(200),
-	`created_by` int,
-	`created_at` timestamp NOT NULL DEFAULT (now())
-);
---> statement-breakpoint
-CREATE TABLE `invites` (
-	`id` int AUTO_INCREMENT PRIMARY KEY,
-	`team_id` int NOT NULL,
-	`invite_code` varchar(50) NOT NULL,
-	`created_by` int,
+	`created_by` int NOT NULL,
 	`created_at` timestamp NOT NULL DEFAULT (now())
 );
 --> statement-breakpoint
@@ -87,8 +78,6 @@ ALTER TABLE `bookings` ADD CONSTRAINT `bookings_event_id_events_id_fkey` FOREIGN
 ALTER TABLE `bookings` ADD CONSTRAINT `bookings_user_id_users_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);--> statement-breakpoint
 ALTER TABLE `events` ADD CONSTRAINT `events_team_id_teams_id_fkey` FOREIGN KEY (`team_id`) REFERENCES `teams`(`id`);--> statement-breakpoint
 ALTER TABLE `events` ADD CONSTRAINT `events_created_by_users_id_fkey` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`);--> statement-breakpoint
-ALTER TABLE `invites` ADD CONSTRAINT `invites_team_id_teams_id_fkey` FOREIGN KEY (`team_id`) REFERENCES `teams`(`id`);--> statement-breakpoint
-ALTER TABLE `invites` ADD CONSTRAINT `invites_created_by_users_id_fkey` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`);--> statement-breakpoint
 ALTER TABLE `memberships` ADD CONSTRAINT `memberships_user_id_users_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`);--> statement-breakpoint
 ALTER TABLE `memberships` ADD CONSTRAINT `memberships_team_id_teams_id_fkey` FOREIGN KEY (`team_id`) REFERENCES `teams`(`id`);--> statement-breakpoint
 ALTER TABLE `teams` ADD CONSTRAINT `teams_created_by_users_id_fkey` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`);--> statement-breakpoint
