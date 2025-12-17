@@ -13,13 +13,13 @@
     "@hono/node-server": "^1.19.6",
     "@hono/zod-validator": "^0.7.5",
     "dotenv": "^16.6.1",
-    "drizzle-orm": "^1.0.0-beta.2-58a4521",
+    "drizzle-orm": "^1.0.0-beta.3-bd1ec83",
     "hono": "^4.11.1",
-    "mysql2": "^3.15.3"
+    "mysql2": "^3.16.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
-    "drizzle-kit": "^1.0.0-beta.2-58a4521",
+    "drizzle-kit": "^1.0.0-beta.3-bd1ec83",
     "tsx": "^4.21.0",
     "typescript": "^5.8.3"
   }

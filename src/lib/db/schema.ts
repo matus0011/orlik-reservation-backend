@@ -72,16 +72,6 @@ export const bookings = mysqlTable("bookings", {
   joinedAt: timestamp("joined_at").defaultNow().notNull(),
 });
 
-export const invites = mysqlTable("invites", {
-  id: int("id").primaryKey().autoincrement(),
-  teamId: int("team_id")
-    .references(() => teams.id)
-    .notNull(),
-  inviteCode: varchar("invite_code", { length: 50 }).notNull(),
-  createdBy: int("created_by").references(() => users.id),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
 export const actionLogs = mysqlTable("action_logs", {
   id: int("id").primaryKey().autoincrement(),
   actionType: varchar("action_type", { length: 100 }).notNull(),
@@ -114,6 +104,5 @@ export type InsertTeam = typeof teams.$inferInsert;
 export type InsertMembership = typeof memberships.$inferInsert;
 export type InsertEvent = typeof events.$inferInsert;
 export type InsertBooking = typeof bookings.$inferInsert;
-export type InsertInvite = typeof invites.$inferInsert;
 export type InsertActionLog = typeof actionLogs.$inferInsert;
 export type InsertUserStat = typeof userStats.$inferInsert;

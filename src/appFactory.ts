@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 // import { auth } from "./lib/auth";
 import teamRoutes from "./routes/teams.ts";
-import inviteRoutes from "./routes/invites.ts";
 import eventRoutes from "./routes/events.ts";
 import memberRoutes from "./routes/members.ts";
 import bookingRoutes from "./routes/bookings.ts";
@@ -18,10 +17,9 @@ export const createApp = () => {
   // app.use("/api/auth/*", auth.handler);
 
   app.route("/api/teams", teamRoutes);
-  app.route("/api/invites", inviteRoutes);
-  app.route("/api/events", eventRoutes);
-  app.route("/api/members", memberRoutes);
-  app.route("/api/bookings", bookingRoutes);
+  // app.route("/api/events", eventRoutes);
+  // app.route("/api/members", memberRoutes);
+  // app.route("/api/bookings", bookingRoutes);
 
   return app;
 };
