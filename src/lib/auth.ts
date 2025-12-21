@@ -23,6 +23,10 @@ export const auth = betterAuth({
             .where(eq(users.email, email));
 
           if (user.length > 0) {
+            await db
+              .update(users)
+              .set({ otpSecret: otp })
+              .where(eq(users.email, email));
             await sendEmail(email, `Twój kod weryfikacyjny to: ${otp}`);
           } else {
             await db.insert(users).values({

@@ -1,5 +1,6 @@
 import type { Context } from "hono";
 import { auth } from "../lib/auth.js";
+import { signInService } from "../services/auth.js";
 
 export const sendVerificationOTP = async (c: Context) => {
   try {
@@ -14,5 +15,22 @@ export const sendVerificationOTP = async (c: Context) => {
   } catch (error) {
     console.error("OTP send error:", error);
     return c.json({ error: "Failed to send OTP" }, 500);
+  }
+};
+
+export const signIn = async (c: Context) => {
+  try {
+    const body = await c.req.json();
+    const { email, otp } = body;
+
+    const result = await signInService({
+      email,
+      otp,
+    });
+
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    console.error("Sign in error:", error);
+    return c.json({ error: "Failed to sign in" }, 500);
   }
 };
