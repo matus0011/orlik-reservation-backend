@@ -20,12 +20,10 @@ export const users = mysqlTable("users", {
   id: int("id").primaryKey().autoincrement(),
   name: varchar("name", { length: 100 }).notNull(),
   email: varchar("email", { length: 200 }).unique(),
-  passwordHash: varchar("password_hash", { length: 255 }),
-  facebookId: varchar("facebook_id", { length: 255 }),
-  avatarUrl: text("avatar_url"),
   globalRole: varchar("global_role", { length: 50 }).notNull().default("USER"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   lastLoginAt: timestamp("last_login_at"),
+  otpSecret: varchar("otp_secret", { length: 255 }),
 });
 
 export const teams = mysqlTable("teams", {

@@ -10,11 +10,7 @@ export const sendVerificationOTP = async (c: Context) => {
       body: { email, type },
     });
 
-    return c.json({
-      success: true,
-      message: "OTP sent successfully",
-      data: result,
-    });
+    return c.json(result);
   } catch (error) {
     console.error("OTP send error:", error);
     return c.json({ error: "Failed to send OTP" }, 500);
