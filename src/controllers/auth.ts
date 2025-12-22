@@ -28,7 +28,7 @@ export const signIn = async (c: Context) => {
       otp,
     });
 
-    return c.json({ success: true, data: result });
+    return c.json(result);
   } catch (error) {
     console.error("Sign in error:", error);
     return c.json({ error: "Failed to sign in" }, 500);

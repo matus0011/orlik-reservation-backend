@@ -15,10 +15,15 @@ export const signInService = async (data: { email: string; otp: string }) => {
       .where(and(eq(users.email, data.email), eq(users.otpSecret, data.otp)));
 
     if (user.length === 0) {
-      return { success: false, message: "Invalid email or OTP" };
+      throw new Error("Invalid email or OTP");
     }
 
-    return { success: true, data: user[0] };
+    await db
+      .update(users)
+      .set({ lastLoginAt: new Date() })
+      .where(and(eq(users.email, data.email), eq(users.otpSecret, data.otp)));
+
+    return user[0];
   } catch (error) {
     console.error(error);
     throw new Error("Failed to create event (event service)");

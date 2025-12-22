@@ -8,7 +8,7 @@ import {
   // json,
 } from "drizzle-orm/mysql-core";
 
-export const globalRoles: string[] = ["USER", "ADMIN", "SUPER_ADMIN"];
+export const globalRoles: string[] = ["USER", "ADMIN"];
 export const statuses: string[] = ["PENDING", "CONFIRMED", "CANCELLED"];
 export const guestBookingStatuses: string[] = [
   "INVITED",

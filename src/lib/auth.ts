@@ -32,7 +32,7 @@ export const auth = betterAuth({
             await db.insert(users).values({
               email,
               otpSecret: otp,
-              name: "Wpisz swoje imię i nazwisko",
+              name: "Imię i nazwisko",
               globalRole: "USER",
             });
 
