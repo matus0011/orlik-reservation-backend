@@ -20,10 +20,10 @@ eventRoutes.post(
   zValidator(
     "json",
     z.object({
-      teamId: z.number().min(1),
+      teamId: z.string().min(1),
       title: z.string().min(1).max(200),
       description: z.string().optional(),
-      limitPlayers: z.number(),
+      limitPlayers: z.number().min(1).max(100),
     })
   ),
   createEvent
