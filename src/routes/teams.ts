@@ -7,6 +7,7 @@ import {
   createTeam,
   updateTeam,
   deleteTeam,
+  joinTeamByCode,
 } from "../controllers/teams.js";
 
 const teamRoutes = new Hono();
@@ -25,6 +26,17 @@ teamRoutes.post(
     })
   ),
   createTeam
+);
+
+teamRoutes.post(
+  "/join",
+  zValidator(
+    "json",
+    z.object({
+      inviteCode: z.string().min(1).max(50),
+    })
+  ),
+  joinTeamByCode
 );
 
 teamRoutes.put(

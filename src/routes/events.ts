@@ -7,6 +7,7 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
+  getEventsByUserId,
 } from "../controllers/events.js";
 
 const eventRoutes = new Hono();
@@ -14,6 +15,12 @@ const eventRoutes = new Hono();
 eventRoutes.use("*", authMiddleware);
 
 eventRoutes.get("/", getEvents);
+
+eventRoutes.get(
+  "/user/:userId",
+  zValidator("param", z.object({ userId: z.string() })),
+  getEventsByUserId
+);
 
 eventRoutes.post(
   "/",

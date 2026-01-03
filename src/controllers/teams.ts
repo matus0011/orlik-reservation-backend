@@ -5,7 +5,9 @@ import {
   getTeams as getTeamsService,
   updateTeam as updateTeamService,
   deleteTeam as deleteTeamService,
+  getTeamByInviteCode as getTeamByInviteCodeService,
 } from "../services/teams.js";
+import { createMembership as createMembershipService } from "../services/memberships.js";
 
 export const getTeams = async (c: Context) => {
   try {
@@ -54,5 +56,29 @@ export const deleteTeam = async (c: Context) => {
   } catch (error) {
     console.error(error);
     return c.json({ error: "Failed to delete team" }, 500);
+  }
+};
+
+export const joinTeamByCode = async (c: Context) => {
+  try {
+    const { inviteCode } = await c.req.json();
+    const userId = c.get("user")?.id;
+
+    const team = await getTeamByInviteCodeService(inviteCode);
+
+    if (!team) {
+      return c.json({ error: "Invalid invite code" }, 404);
+    }
+
+    // Create membership
+    const membership = await createMembershipService({
+      userId: Number(userId),
+      teamId: team.id,
+    });
+
+    return c.json({ success: true, data: { team, membership } });
+  } catch (error) {
+    console.error(error);
+    return c.json({ error: "Failed to join team" }, 500);
   }
 };

@@ -5,6 +5,7 @@ import {
   getEvents as getEventsService,
   updateEvent as updateEventService,
   deleteEvent as deleteEventService,
+  getEventsByUserId as getEventsByUserIdService,
 } from "../services/events.js";
 
 export const getEvents = async (c: Context) => {
@@ -52,5 +53,16 @@ export const deleteEvent = async (c: Context) => {
   } catch (error) {
     console.error(error);
     return c.json({ error: "Failed to delete event" }, 500);
+  }
+};
+
+export const getEventsByUserId = async (c: Context) => {
+  try {
+    const userId = Number(c.req.param("userId"));
+    const events = await getEventsByUserIdService(userId);
+    return c.json({ success: true, data: events });
+  } catch (error) {
+    console.error(error);
+    return c.json({ error: "Failed to get events by user ID" }, 500);
   }
 };

@@ -62,3 +62,20 @@ export const deleteTeam = async (id: number) => {
     throw new Error("Failed to delete team (team service)");
   }
 };
+
+export const getTeamByInviteCode = async (inviteCode: string) => {
+  try {
+    if (!db) {
+      throw new Error("Database not connected");
+    }
+
+    const result = await db
+      .select()
+      .from(teams)
+      .where(eq(teams.inviteCode, inviteCode));
+    return result[0] || null;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get team by invite code (team service)");
+  }
+};
