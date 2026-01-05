@@ -1,7 +1,7 @@
 import type { InsertEvent } from "../lib/db/schema.js";
-import { events, memberships } from "../lib/db/schema.js";
-import { db } from "../lib/db/client.ts";
-import { eq, inArray } from "drizzle-orm";
+import { events, memberships, bookings } from "../lib/db/schema.js";
+import { db } from "../lib/db/client.js";
+import { eq, inArray, sql } from "drizzle-orm";
 
 export const createEvent = async (data: InsertEvent) => {
   try {
@@ -23,7 +23,24 @@ export const getEvents = async () => {
       throw new Error("Database not connected");
     }
 
-    const result = await db.select().from(events);
+    console.log("getEvents");
+
+    // Get all events with booking counts
+    const result = await db
+      .select({
+        id: events.id,
+        teamId: events.teamId,
+        title: events.title,
+        description: events.description,
+        limitPlayers: events.limitPlayers,
+        createdBy: events.createdBy,
+        createdAt: events.createdAt,
+        bookingCount: sql<number>`COUNT(${bookings.id})`.as("booking_count"),
+      })
+      .from(events)
+      .leftJoin(bookings, eq(events.id, bookings.eventId))
+      .groupBy(events.id);
+
     return result;
   } catch (error) {
     console.error(error);
@@ -54,9 +71,10 @@ export const deleteEvent = async (id: number) => {
     if (!db) {
       throw new Error("Database not connected");
     }
-    // TODO: delate is last step off all
-    // const result = await db.delete(teams).where(eq(teams.id, id));
-    // return result;
+
+    // Cascade delete will automatically remove all bookings for this event
+    const result = await db.delete(events).where(eq(events.id, id));
+    return result;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to delete event (event service)");
@@ -81,11 +99,23 @@ export const getEventsByUserId = async (userId: number) => {
 
     const teamIds = userMemberships.map((m) => m.teamId);
 
-    // Get all events for those teams
+    // Get all events for those teams with booking counts
+    // where inArray(events.teamId, teamIds) return user is member of the team
     const result = await db
-      .select()
+      .select({
+        id: events.id,
+        teamId: events.teamId,
+        title: events.title,
+        description: events.description,
+        limitPlayers: events.limitPlayers,
+        createdBy: events.createdBy,
+        createdAt: events.createdAt,
+        bookingCount: sql<number>`COUNT(${bookings.id})`.as("booking_count"),
+      })
       .from(events)
-      .where(inArray(events.teamId, teamIds));
+      .leftJoin(bookings, eq(events.id, bookings.eventId))
+      .where(inArray(events.teamId, teamIds))
+      .groupBy(events.id);
 
     return result;
   } catch (error) {

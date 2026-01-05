@@ -96,3 +96,24 @@ export const deleteBookingByUserAndEvent = async (c: Context) => {
     return c.json({ error: "Failed to delete booking by user and event" }, 500);
   }
 };
+
+// Admin endpoint to remove any user from an event
+export const adminDeleteBooking = async (c: Context) => {
+  try {
+    const currentUser = c.get("user");
+    // Only admins can delete bookings
+    if (
+      currentUser.globalRole !== "ADMIN" &&
+      currentUser.globalRole !== "SUPER_ADMIN"
+    ) {
+      return c.json({ error: "Access denied. Admin rights required." }, 403);
+    }
+    const userId = Number(c.req.param("userId"));
+    const eventId = Number(c.req.param("eventId"));
+    const result = await deleteBookingByUserAndEventService(userId, eventId);
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    console.error(error);
+    return c.json({ error: "Failed to delete booking" }, 500);
+  }
+};
