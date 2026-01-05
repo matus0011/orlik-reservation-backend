@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "mysql",
-  "id": "34c01c50-9b3e-425c-86ca-5ec4c8eda149",
+  "id": "440dbe72-df7a-46f2-9ca2-60171442908f",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -12,10 +12,6 @@
     },
     {
       "name": "events",
-      "entityType": "tables"
-    },
-    {
-      "name": "guest_bookings",
       "entityType": "tables"
     },
     {
@@ -69,20 +65,6 @@
       "collation": null,
       "generated": null,
       "name": "user_id",
-      "entityType": "columns",
-      "table": "bookings"
-    },
-    {
-      "type": "varchar(20)",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": "'PENDING'",
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "status",
       "entityType": "columns",
       "table": "bookings"
     },
@@ -157,20 +139,6 @@
       "table": "events"
     },
     {
-      "type": "timestamp",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": "(now())",
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "date",
-      "entityType": "columns",
-      "table": "events"
-    },
-    {
       "type": "int",
       "notNull": true,
       "autoIncrement": false,
@@ -224,90 +192,6 @@
       "generated": null,
       "name": "id",
       "entityType": "columns",
-      "table": "guest_bookings"
-    },
-    {
-      "type": "int",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "event_id",
-      "entityType": "columns",
-      "table": "guest_bookings"
-    },
-    {
-      "type": "int",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "invited_by",
-      "entityType": "columns",
-      "table": "guest_bookings"
-    },
-    {
-      "type": "varchar(100)",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "guest_name",
-      "entityType": "columns",
-      "table": "guest_bookings"
-    },
-    {
-      "type": "varchar(20)",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": "'INVITED'",
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "status",
-      "entityType": "columns",
-      "table": "guest_bookings"
-    },
-    {
-      "type": "timestamp",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": "(now())",
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "invited_at",
-      "entityType": "columns",
-      "table": "guest_bookings"
-    },
-    {
-      "type": "int",
-      "notNull": true,
-      "autoIncrement": true,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "id",
-      "entityType": "columns",
       "table": "memberships"
     },
     {
@@ -335,20 +219,6 @@
       "collation": null,
       "generated": null,
       "name": "team_id",
-      "entityType": "columns",
-      "table": "memberships"
-    },
-    {
-      "type": "boolean",
-      "notNull": true,
-      "autoIncrement": false,
-      "default": "true",
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "active",
       "entityType": "columns",
       "table": "memberships"
     },
@@ -479,20 +349,6 @@
       "table": "users"
     },
     {
-      "type": "text",
-      "notNull": false,
-      "autoIncrement": false,
-      "default": null,
-      "onUpdateNow": false,
-      "onUpdateNowFsp": null,
-      "charSet": null,
-      "collation": null,
-      "generated": null,
-      "name": "avatar_url",
-      "entityType": "columns",
-      "table": "users"
-    },
-    {
       "type": "varchar(50)",
       "notNull": true,
       "autoIncrement": false,
@@ -569,14 +425,6 @@
         "id"
       ],
       "name": "PRIMARY",
-      "table": "guest_bookings",
-      "entityType": "pks"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "name": "PRIMARY",
       "table": "memberships",
       "entityType": "pks"
     },
@@ -599,6 +447,22 @@
     {
       "columns": [
         {
+          "value": "invite_code",
+          "isExpression": false
+        }
+      ],
+      "isUnique": true,
+      "using": null,
+      "algorithm": null,
+      "lock": null,
+      "nameExplicit": false,
+      "name": "invite_code_unique",
+      "table": "teams",
+      "entityType": "indexes"
+    },
+    {
+      "columns": [
+        {
           "value": "email",
           "isExpression": false
         }
@@ -614,6 +478,102 @@
     },
     {
       "columns": [
+        {
+          "value": "event_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "using": null,
+      "algorithm": null,
+      "lock": null,
+      "nameExplicit": true,
+      "name": "idx_bookings_event_id",
+      "entityType": "indexes",
+      "table": "bookings"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "using": null,
+      "algorithm": null,
+      "lock": null,
+      "nameExplicit": true,
+      "name": "idx_bookings_user_id",
+      "entityType": "indexes",
+      "table": "bookings"
+    },
+    {
+      "columns": [
+        {
+          "value": "team_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "using": null,
+      "algorithm": null,
+      "lock": null,
+      "nameExplicit": true,
+      "name": "idx_events_team_id",
+      "entityType": "indexes",
+      "table": "events"
+    },
+    {
+      "columns": [
+        {
+          "value": "created_by",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "using": null,
+      "algorithm": null,
+      "lock": null,
+      "nameExplicit": true,
+      "name": "idx_events_created_by",
+      "entityType": "indexes",
+      "table": "events"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "using": null,
+      "algorithm": null,
+      "lock": null,
+      "nameExplicit": true,
+      "name": "idx_memberships_user_id",
+      "entityType": "indexes",
+      "table": "memberships"
+    },
+    {
+      "columns": [
+        {
+          "value": "team_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "using": null,
+      "algorithm": null,
+      "lock": null,
+      "nameExplicit": true,
+      "name": "idx_memberships_team_id",
+      "entityType": "indexes",
+      "table": "memberships"
+    },
+    {
+      "columns": [
         "event_id"
       ],
       "tableTo": "events",
@@ -621,7 +581,7 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "name": "bookings_event_id_events_id_fkey",
       "entityType": "fks",
@@ -636,7 +596,7 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "name": "bookings_user_id_users_id_fkey",
       "entityType": "fks",
@@ -651,7 +611,7 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "name": "events_team_id_teams_id_fkey",
       "entityType": "fks",
@@ -666,41 +626,11 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "name": "events_created_by_users_id_fkey",
       "entityType": "fks",
       "table": "events"
-    },
-    {
-      "columns": [
-        "event_id"
-      ],
-      "tableTo": "events",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
-      "nameExplicit": false,
-      "name": "guest_bookings_event_id_events_id_fkey",
-      "entityType": "fks",
-      "table": "guest_bookings"
-    },
-    {
-      "columns": [
-        "invited_by"
-      ],
-      "tableTo": "users",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
-      "nameExplicit": false,
-      "name": "guest_bookings_invited_by_users_id_fkey",
-      "entityType": "fks",
-      "table": "guest_bookings"
     },
     {
       "columns": [
@@ -711,7 +641,7 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "name": "memberships_user_id_users_id_fkey",
       "entityType": "fks",
@@ -726,7 +656,7 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "name": "memberships_team_id_teams_id_fkey",
       "entityType": "fks",
@@ -741,7 +671,7 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "CASCADE",
       "nameExplicit": false,
       "name": "teams_created_by_users_id_fkey",
       "entityType": "fks",

@@ -1,6 +1,6 @@
 import type { InsertTeam } from "../lib/db/schema.js";
 import { teams } from "../lib/db/schema.js";
-import { db } from "../lib/db/client.ts";
+import { db } from "../lib/db/client.js";
 import { eq } from "drizzle-orm";
 
 export const createTeam = async (data: InsertTeam) => {
@@ -54,9 +54,12 @@ export const deleteTeam = async (id: number) => {
     if (!db) {
       throw new Error("Database not connected");
     }
-    // TODO: delate is last step off all
-    // const result = await db.delete(teams).where(eq(teams.id, id));
-    // return result;
+    
+    // Cascade delete will automatically remove:
+    // - All events in the team (and their bookings)
+    // - All memberships in the team
+    const result = await db.delete(teams).where(eq(teams.id, id));
+    return result;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to delete team (team service)");

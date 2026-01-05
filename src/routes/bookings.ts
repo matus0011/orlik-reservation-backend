@@ -11,6 +11,7 @@ import {
   updateBooking,
   deleteBooking,
   deleteBookingByUserAndEvent,
+  adminDeleteBooking,
 } from "../controllers/bookings.js";
 
 const bookingRoutes = new Hono();
@@ -65,6 +66,13 @@ bookingRoutes.delete(
   "/user/:userId/event/:eventId",
   zValidator("param", z.object({ userId: z.string(), eventId: z.string() })),
   deleteBookingByUserAndEvent
+);
+
+// Admin route to remove any user from an event
+bookingRoutes.delete(
+  "/admin/user/:userId/event/:eventId",
+  zValidator("param", z.object({ userId: z.string(), eventId: z.string() })),
+  adminDeleteBooking
 );
 
 export default bookingRoutes;
